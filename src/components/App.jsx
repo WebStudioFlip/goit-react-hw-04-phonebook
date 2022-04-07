@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 import Section from '../shared/Section';
+
 
 const App = () => {
   const [contacts, setContacts] = useState(() => {
@@ -20,23 +21,23 @@ const App = () => {
       localStorage.setItem('contacts', JSON.stringify(contacts));   
   },[contacts])
 
-  const addContact = addContact => {    
-    const {name} = addContact;
+  const addContact = useCallback( contact => {        
+    const {name} = contact;
     if (
       !contacts.find(
         el => el.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      addContact.id = nanoid();
+      contact.id = nanoid();
       setContacts(() => {
-        return [...contacts, addContact] 
+        return [...contacts, contact] 
       });
     } else {
       alert(`${name} is already in contacts`);
     }
-  };
+  },[contacts]);
 
-  const getFilteredContacts = () => {    
+  const getFilteredContacts =() => {    
     if (!filter) {
       return contacts;
     }
@@ -45,10 +46,10 @@ const App = () => {
     return result;
   };
 
-  const handleSearch = e => {
-    const { value } = e.target;
+  const handleSearch = useCallback( ({target}) => {
+    const { value } = target;
     setFilter(value);
-  };
+  }, []);
 
   const removeContact = contactId => {
     setContacts(contacts.filter(item => item.id !== contactId));

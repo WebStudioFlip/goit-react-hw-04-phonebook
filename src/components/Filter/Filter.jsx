@@ -1,7 +1,9 @@
+import {memo} from 'react'
 import PropTypes from "prop-types";
 import style from "./filter.module.css";
 
 const Filter = (props)=> {
+    console.log("filter")
     const {filterContacts, filter} =props   
     return (        
         <div className={style.formGroup}>
@@ -11,7 +13,7 @@ const Filter = (props)=> {
     )
 }
 
-export default Filter;
+export default memo(Filter);
 
 Filter.propTypes = {       
             filter:PropTypes.string,

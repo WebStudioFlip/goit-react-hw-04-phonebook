@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import style from './contactForm.module.css';
 
 const ContactForm = ({ addContact }) => {
+  console.log('form')
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -72,7 +73,7 @@ const ContactForm = ({ addContact }) => {
   );
 };
 
-export default ContactForm;
+export default memo(ContactForm);
 
 ContactForm.propTypes = {
   addContact: PropTypes.func,
