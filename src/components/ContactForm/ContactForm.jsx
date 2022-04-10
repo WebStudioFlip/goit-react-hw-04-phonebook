@@ -4,29 +4,18 @@ import style from './contactForm.module.css';
 
 const ContactForm = ({ addContact }) => {
   console.log('form')
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [contact, setContact] = useState({name:'', number: ''});
 
   const handleChange = event => {
     const { name, value } = event.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
+    setContact({...contact,
+    [name]:value})
   };
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    addContact({ name, number });
-    setName('');
-    setNumber('');
+    addContact(contact);
+    setContact({name:'', number: ''});    
   };
 
   return (
@@ -38,7 +27,7 @@ const ContactForm = ({ addContact }) => {
         <input
           className={style.formGroupInput}
           onChange={handleChange}
-          value={name}
+          value={contact.name}
           type="text"
           name="name"
           placeholder="Enter Name"
@@ -53,7 +42,7 @@ const ContactForm = ({ addContact }) => {
         </label>
         <input
           type="tel"
-          value={number}
+          value={contact.number}
           className={style.formGroupInput}
           onChange={handleChange}
           placeholder="Enter Phone"
